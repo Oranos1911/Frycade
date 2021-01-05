@@ -78,14 +78,15 @@ namespace Doodle
         private void UpdateRecord()
         {
             fr.GetPlayer(requestedName)
-             .AddOnSuccessListener(this);
+             .AddOnSuccessListener(this)
+             .AddOnFailureListener(this);
         }
 
         public void OnSuccess(Java.Lang.Object result)
         {
             var snapshot = (QuerySnapshot) result;
             var documents = snapshot.Documents;
-            if(documents.Count != 0)
+            if(documents.Count != 0 && requestedName != sharedPreferences.GetString(Constants.SELECT_NICKNAME_KEY , ""))
             {
                 tvError.Text = "That name is already taken cowboy ;)";
                 return;
@@ -100,7 +101,6 @@ namespace Doodle
             map.Put("name", requestedName);
             map.Put("score", sharedPreferences.GetInt(Constants.LAST_HIGH_SCORE_KEY , 0));
             reference.Set(map);
-
 
             // Update new nickname to SharedPreferences
             var editor = sharedPreferences.Edit();

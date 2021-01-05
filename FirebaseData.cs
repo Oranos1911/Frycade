@@ -35,11 +35,11 @@ namespace Doodle
             if (app is null)
             {
                 FirebaseOptions options = new FirebaseOptions.Builder()
-                .SetProjectId("fulcrum-7c537")
-                .SetApplicationId("fulcrum-7c537")
-                .SetApiKey("AIzaSyA8lo7k0EFPNR32-g4xdBnMkQnycn_v4G8")
-                .SetDatabaseUrl("https://fulcrum-7c537.firebaseio.com")
-                .SetStorageBucket("fulcrum-7c537.appspot.com")
+                .SetProjectId("frycade-87163")
+                .SetApplicationId("frycade-87163")
+                .SetApiKey("AIzaSyAtygah74QcnaIo6WLlVB_SpBaDvSJEMS8")
+                .SetDatabaseUrl("https://frycade-87163.firebaseio.com")
+                .SetStorageBucket("frycade-87163.appspot.com")
                 .Build();
 
                 app = FirebaseApp.InitializeApp(Application.Context, options);

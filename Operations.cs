@@ -56,11 +56,16 @@ namespace Doodle
         {
             Random rand = new Random();
 
-            int red = 25 + rand.Next(0, 255);
-            int green = 25 + rand.Next(0, 255);
-            int blue = 25 + rand.Next(0, 255);
+            Color[] colors =
+            {
+                Color.Rgb(255 , 0 , 0) ,
+                Color.Rgb(0 , 255 , 0) ,
+                Color.Rgb(255 , 255 , 0) ,
+                Color.Rgb(255, 0, 255) ,
+                Color.Rgb(0 , 255 , 255)
+            };
 
-            return PaintColor(Color.Rgb(red, green, blue));
+            return PaintColor(colors[rand.Next(0 , colors.Length)]);
         }
     }
 }

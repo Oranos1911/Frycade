@@ -122,7 +122,8 @@ namespace Doodle
                 mass = new Mass(
                     new Vector(initialLocation ,0) , 
                     direction * new Vector(Velocity , 0) , 
-                    Vector.zeroVector, sprite ,
+                    Vector.zeroVector, 
+                    sprite ,
                     Operations.PaintRandomColor() ,
                     false
                     );
@@ -157,11 +158,10 @@ namespace Doodle
 
     class Ramp : Accessorie
     {
-        public static Paint objectColor = Operations.PaintColor(Color.Rgb(0, 255, 255));
+        public static Color objectColor = Color.Rgb(0, 255, 255);
         public Mass mass;
 
         public static float jumpVelocity = 110f;
-
         public Ramp() : base() { }
 
         public override void Init(Boardgame game, Canvas canvas, Plane plane)
@@ -173,7 +173,7 @@ namespace Doodle
                     Vector.zeroVector, 
                     Vector.zeroVector, 
                     game.RampSprite , 
-                    objectColor , 
+                    Operations.PaintColor(objectColor) , 
                     false
                     );
             }
@@ -242,7 +242,7 @@ namespace Doodle
         public static float OcilatorSpawnProb = 0.09f;
         public static float RampSpawnProb = 0.043f;
         public static float MonsterCatSpawnProb = 0.07f;
-        public static float MonsterBirdSpawnProb = 0.03f;
+        public static float MonsterBirdSpawnProb = 0.06f;
 
         public Ocilator Ocilator { get; set; }
         public Ramp ramp { get; set; }
@@ -258,7 +258,6 @@ namespace Doodle
             ramp = new Ramp();
             monsterCat = new Cat();
             monsterBird = new Bird();
-
             ResetColor();
         }
 
@@ -291,8 +290,6 @@ namespace Doodle
         public void Drop(float offset)
         {
             r.y += offset;
-            if (monsterBird.IsActive)
-                monsterBird.Drop(offset);
         }
 
         protected override void PreMechanics(Boardgame game, Canvas canvas)

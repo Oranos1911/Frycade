@@ -14,6 +14,12 @@ namespace Doodle
 {
     static class CanvasConstants
     {
+        enum dim 
+        {
+            width ,
+            height
+        }
+
         public static float ScallerWidth;
         public static float ScallerHeight;
         public static float ScallerSqaure;
@@ -23,6 +29,15 @@ namespace Doodle
             ScallerWidth = canvas.Width;
             ScallerHeight = canvas.Height;
             ScallerSqaure = ScallerWidth * ScallerHeight;
+        }
+
+        public static float GetFloat(float f , string dim)
+        {
+            //if(dim == dim.height)
+            //    return f * ScallerWidth;
+            //if (dim == "height")
+            //    return f * ScallerHeight;
+            return 0;
         }
 
 

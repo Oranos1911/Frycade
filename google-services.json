@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "64241527994",
-    "firebase_url": "https://fulcrum-7c537.firebaseio.com",
-    "project_id": "fulcrum-7c537",
-    "storage_bucket": "fulcrum-7c537.appspot.com"
+    "project_number": "1002756713141",
+    "project_id": "frycade-87163",
+    "storage_bucket": "frycade-87163.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:64241527994:android:e824669b139437cb6ea683",
+        "mobilesdk_app_id": "1:1002756713141:android:91fdbcec3d889a52e6ecfc",
         "android_client_info": {
-          "package_name": "com.Frycade.doodle"
+          "package_name": "com.frycade.aharon"
         }
       },
       "oauth_client": [
         {
-          "client_id": "64241527994-asrrgmuqh16pondaqc4hgftf3kstqovk.apps.googleusercontent.com",
+          "client_id": "1002756713141-eqck8g9a0e9i513jma03unhk8u16qqdl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA8lo7k0EFPNR32-g4xdBnMkQnycn_v4G8"
+          "current_key": "AIzaSyAtygah74QcnaIo6WLlVB_SpBaDvSJEMS8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "64241527994-asrrgmuqh16pondaqc4hgftf3kstqovk.apps.googleusercontent.com",
+              "client_id": "1002756713141-eqck8g9a0e9i513jma03unhk8u16qqdl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

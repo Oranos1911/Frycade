@@ -161,6 +161,8 @@ namespace Doodle
                 foreach (Plane plane in planes)
                 {
                     plane.Drop(offset);
+                    if(plane.monsterBird.IsActive)
+                        plane.monsterBird.Drop(offset);
                     if (plane.r.y > canvas.Height)
                         plane.Relocate(this , canvas);
                 }
@@ -185,7 +187,7 @@ namespace Doodle
                         plane.monsterCat.Kill();
                         soundManager.PlaySound("cat");
                     }
-                    else if (player.IsInteractedBellow(plane.monsterCat.mass) && !plane.monsterCat.IsDead)
+                    else if (player.IsInteractedCenterBellow(plane.monsterCat.mass) && !plane.monsterCat.IsDead)
                     {
                         soundManager.PlaySound("punch");
                         player.Kill();
@@ -206,7 +208,7 @@ namespace Doodle
                         plane.monsterBird.Kill();
                         soundManager.PlaySound("jumpshot");
                     }
-                    else if (player.IsInteractedBellow(plane.monsterBird.mass) && !plane.monsterBird.IsDead)
+                    else if (player.IsInteractedCenterBellow(plane.monsterBird.mass) && !plane.monsterBird.IsDead)
                     {
                         soundManager.PlaySound("punch");
                         player.Kill();

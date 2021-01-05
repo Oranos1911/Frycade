@@ -19,8 +19,7 @@ namespace Doodle
         public bool IsActive { get; set; }
 
         public Accessorie()
-        {
-            
+        {           
             IsActive = false;
         }
 
@@ -161,7 +160,7 @@ namespace Doodle
         public static Paint objectColor = Operations.PaintColor(Color.Rgb(0, 255, 255));
         public Mass mass;
 
-        public static float jumpVelocity = 95f;
+        public static float jumpVelocity = 110f;
 
         public Ramp() : base() { }
 

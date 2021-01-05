@@ -15,9 +15,7 @@ namespace Doodle
     class Mass
     {
         // Analytical properties
-        public static Vector gravityForce = new Vector(0, 1.35f);
-        public static float dt = 1f;
-        public static float collisionRange = 450f;
+        public static Vector gravityForce = new Vector(0, 1.45f);
         public Vector r { get; set; } // Location
         public Vector v { get; set; } // Velocity
         public Vector a { get; set; } // Acceleration
@@ -82,8 +80,8 @@ namespace Doodle
         private void Update(Boardgame game, Canvas canvas)
         {
             PreMechanics(game, canvas);
-            v = v + a * dt;
-            r = r + v * dt;
+            v = v + a;
+            r = r + v;
             PostMechanics(game, canvas);
         }
 

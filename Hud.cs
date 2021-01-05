@@ -19,13 +19,19 @@ namespace Doodle
 
         private static float btnsPadding = 100f;
         private static float textPadding = 150f;
-
         private static float paddingHorizontal = 100f;
         private static float paddingVertical = 50f;
 
+
+        private static Color InGameScoreTextColor = Color.Rgb(255, 255, 255);
+        private static Color FinalTextColor = Color.Rgb(255, 255, 0);
+        private static Color NewScoreTextColor = Color.Rgb(0 , 255 , 255);
+        private static Color NewScoreTextNumberColor = Color.Rgb(0, 255, 0);
+        private static Color PauseTextColor = Color.Rgb(255 ,255, 0);
+
+
         private Context context;
         private bool isPauseButtonFlipped;
-
         private bool isGameOver, isNewScore;
         public float HudHeight { get; set; }
         public Canvas canvas { get; set; }
@@ -43,17 +49,18 @@ namespace Doodle
             isGameOver = false;
             isNewScore = false;
 
+
             Bitmap iconPause = BitmapFactory.DecodeResource(context.Resources, Resource.Drawable.ic_pause);
             iconPause = Operations.GetResizedBitmap(iconPause, 0.34f);
-            Vector locationPause = new Vector(canvas.Width - iconPause.Width - paddingHorizontal, paddingVertical);
-            Bitmap iconHome = BitmapFactory.DecodeResource(context.Resources, Resource.Drawable.ic_home);
-            iconHome = Operations.GetResizedBitmap(iconHome, 0.34f);
-            Vector locationHome = new Vector(canvas.Width / 2 - iconHome.Width - btnsPadding, canvas.Height / 2 + canvas.Height / 5);
             Bitmap iconPlay = BitmapFactory.DecodeResource(context.Resources, Resource.Drawable.ic_play);
             iconPlay = Operations.GetResizedBitmap(iconPlay, 0.34f);
-            Vector locationPlay = new Vector(canvas.Width / 2 + iconPlay.Width - btnsPadding, canvas.Height / 2 + canvas.Height / 5);
+            Bitmap iconHome = BitmapFactory.DecodeResource(context.Resources, Resource.Drawable.ic_home);
+            iconHome = Operations.GetResizedBitmap(iconHome, 0.34f);
+            Vector locationPause = new Vector(canvas.Width - iconPause.Width - paddingHorizontal, paddingVertical);
+            Vector locationHome = new Vector(canvas.Width / 2 - iconHome.Width - btnsPadding, 65 * canvas.Height / 100);
+            Vector locationPlay = new Vector(canvas.Width / 2 + iconPlay.Width - btnsPadding, 65 * canvas.Height / 100);
 
-            BtnPause = new CanvasButton(iconPause , locationPause);
+            BtnPause = new CanvasButton(locationPause , iconPause , iconPlay);
             BtnHome = new CanvasButton(iconHome, locationHome);
             BtnPlay = new CanvasButton(iconPlay , locationPlay);
 
@@ -61,7 +68,7 @@ namespace Doodle
 
         public void DrawHUD(int score)
         {
-            DrawText("" + score , HudHeight, Color.White, paddingHorizontal, HudHeight + paddingVertical , false);
+            DrawText("" + score , HudHeight, InGameScoreTextColor, paddingHorizontal, HudHeight + paddingVertical , false);
             BtnPause.Draw(canvas);
             if (isGameOver)
                 DrawFinal(score);
@@ -69,33 +76,34 @@ namespace Doodle
 
         public void DrawPause()
         {
-            DrawText("Pause" , HudHeight, Color.Yellow , paddingHorizontal, 2 * HudHeight + paddingVertical , false);
+            DrawText("Pause" , HudHeight, PauseTextColor , paddingHorizontal, 2 * HudHeight + paddingVertical , false);
         }
 
         private void DrawFinal(int score)
         {
-            DrawText("Game\nOver!", FinalTextSize , Color.Red, canvas.Width / 2 , canvas.Height / 2 , true);
-            BtnHome.Draw(canvas);
-            BtnPlay.Draw(canvas);
+            DrawText("Game\nOver!", FinalTextSize , FinalTextColor , canvas.Width / 2 , canvas.Height / 2 , true);        
             if (isNewScore)
                 DrawRecord(score);
+            BtnHome.Draw(canvas);
+            BtnPlay.Draw(canvas);
         }
 
         private void DrawRecord(int score)
         {
-            DrawText("New High Score!", NewScoreSize , Color.Yellow  , canvas.Width / 2 , canvas.Height / 2 + textPadding , true);
-            DrawText("" + score , NewScoreSize , Color.Green, canvas.Width / 2 , canvas.Height / 2 + 2 * textPadding, true);
+            DrawText("New High Score!", NewScoreSize , NewScoreTextColor, canvas.Width / 2 , canvas.Height / 2 + textPadding , true);
+            DrawText("" + score , NewScoreSize , NewScoreTextNumberColor, canvas.Width / 2 , canvas.Height / 2 + 2 * textPadding, true);
 
         }
         private void DrawText(string str , float size , Color color , float x , float y , bool center)
         {
 
             Paint text = new Paint();
+            if (center)
+               text.TextAlign = Paint.Align.Center;
+           
             text.TextSize = size;
             text.Color = color;
-            text.SetTypeface(context.Resources.GetFont(Resource.Font.arcade));
-            if (center)         
-               text.TextAlign = Paint.Align.Center;
+            text.SetTypeface(context.Resources.GetFont(Resource.Font.arcade));         
 
             Paint paintGlow = new Paint();
             paintGlow.Set(text);
@@ -104,17 +112,22 @@ namespace Doodle
             canvas.DrawText(str , x, y, text);
             canvas.DrawText(str , x, y, paintGlow);
         }
-        
+
         public void FlipPauseButton()
         {
             if (isGameOver)
                 return;
 
             if (!isPauseButtonFlipped)
-                BtnPause.Icon = BtnPlay.Icon;
+            {
+                BtnPause.SetState(1);
+                isPauseButtonFlipped = true;
+            }
             else
-                BtnPause.Icon = Operations.GetResizedBitmap(BitmapFactory.DecodeResource(context.Resources, Resource.Drawable.ic_pause), 0.34f);
-            isPauseButtonFlipped = !isPauseButtonFlipped;
+            {
+                BtnPause.SetState(0);
+                isPauseButtonFlipped = false;
+            }
         }
 
         public void NotifyGameOver()

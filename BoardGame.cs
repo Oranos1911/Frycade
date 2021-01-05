@@ -181,7 +181,7 @@ namespace Doodle
 
                     if (player.IsInteractedAbove(plane.monsterCat.mass))
                     {
-                        player.v.y = -1 * Player.jumpVelocity;
+                        player.Jump();
                         plane.monsterCat.Kill();
                         soundManager.PlaySound("cat");
                     }
@@ -202,7 +202,7 @@ namespace Doodle
 
                     if (player.IsInteractedAbove(plane.monsterBird.mass))
                     {
-                        player.v.y = -1 * Player.jumpVelocity;
+                        player.Jump();
                         plane.monsterBird.Kill();
                         soundManager.PlaySound("jumpshot");
                     }
@@ -218,12 +218,12 @@ namespace Doodle
                 {
                     if (plane.ramp.IsActive)
                     {
-                        player.v.y = -1 * Ramp.jumpVelocity;
+                        player.JumpRamp();
                         soundManager.PlaySound("ramp");
                     }
                     else
                     {
-                        player.v.y = -1 * Player.jumpVelocity;
+                        player.Jump();
                         soundManager.PlaySound("jump");
                     }
                 }
@@ -301,7 +301,7 @@ namespace Doodle
                 RestartGame();
             }
 
-            else if(!isGameOver)
+            else if(!isGameOver && !isGamePaused)
             {
                 Bullet bullet = new Bullet(BulletSprite);
                 bullet.Init(player, location.x);

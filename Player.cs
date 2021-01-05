@@ -22,7 +22,7 @@ namespace Doodle
         private static float protectVelocity = 45f;
         private static float limitVelocity = 250f;
         private static float sensorVelocity = 5f;
-        private static float sensorAcceleration = 4.5f;
+        private static float sensorAcceleration = 5f;
         private static float sensorFlipSensitivity = 2.5f;
 
         public bool IsInverted { get; set; }
@@ -42,6 +42,15 @@ namespace Doodle
             a.x = -1 * sensorAcceleration * value;
         }
 
+        public void Jump()
+        {
+            v.y = -1 * jumpVelocity;
+        }
+
+        public void JumpRamp()
+        {
+            v.y = -1 * Ramp.jumpVelocity;
+        }
         public void Kill()
         {
             IsDead = true;

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "64241527994",
+    "firebase_url": "https://fulcrum-7c537.firebaseio.com",
+    "project_id": "fulcrum-7c537",
+    "storage_bucket": "fulcrum-7c537.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64241527994:android:e824669b139437cb6ea683",
+        "android_client_info": {
+          "package_name": "com.Frycade.doodle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "64241527994-asrrgmuqh16pondaqc4hgftf3kstqovk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8lo7k0EFPNR32-g4xdBnMkQnycn_v4G8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "64241527994-asrrgmuqh16pondaqc4hgftf3kstqovk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

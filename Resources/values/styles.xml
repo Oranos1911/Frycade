@@ -1,0 +1,24 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+      <item name="colorPrimary">@android:color/black</item>
+      <item name="fontFamily">@font/arcade</item>
+      <item name="android:buttonStyle">@style/ButtonTheme</item>
+    </style>
+
+  <style name="NoAction" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="fontFamily">@font/arcade</item>
+    <item name="android:buttonStyle">@style/ButtonTheme</item>
+  </style>
+
+  <style name="ButtonTheme" parent="Widget.AppCompat.Button">
+    <item name="android:background">@drawable/sp_rectenglesmall</item>
+    <item name="android:textColor">@android:color/black</item>
+    <item name="android:background">@android:color/white</item>
+    <item name="android:stateListAnimator">@null</item>
+    <item name="fontFamily">@font/arcade</item>
+  </style>
+
+</resources>

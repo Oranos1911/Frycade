@@ -1,0 +1,27 @@
+<resources>
+  <string name="app_name">Aharon</string>
+
+  <string name="btnPlay">Play</string>
+  <string name="btnLeaderboard">Leader board</string>
+  <string name="btnSettings">Settings</string>
+  <string name="btnHome">Home</string>
+  <string name="btnCancel">Cancel</string>
+  <string name="btnClose">Close</string>
+  <string name="btnOk">Ok</string>
+
+  <string name="tvGameOver">Game Over!</string>
+  <string name="tvSettings">Game Settings</string>
+  <string name="tvName">Your Nickname : </string>
+  <string name="tvTheme">Game Theme</string>
+  <string name="tvSelectCharacter">Character</string>
+  <string name="tvMuteSounds">Mute sounds</string>
+  <string name="tvMuteMusic">Mute Music</string>
+  <string name="tvLeaderboard">Leader Board</string>
+
+
+  <string name="tvTitle">Aharon</string>
+  <string name="tvAbout">Aharon</string>
+  <string name="tvAboutDescription1">Aharon is a game based on Doodle Jump  \n\n that was devloped as a 5 units final project by Itay Ben Guigui \n\n Meitar high school</string>
+  
+</resources>
+

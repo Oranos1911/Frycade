@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/NoAction"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="25dp"
+    android:background="@android:color/black"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+     >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:textColor="@color/arcade4"
+            android:textSize="25dp"
+            android:text="@string/tvLeaderboard"
+        />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+        >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_leaders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" 
+                android:overScrollMode="never"
+            />
+        </LinearLayout>    
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_close"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:text="@string/btnClose"
+        android:backgroundTint="@color/arcade1"
+    />
+</LinearLayout>

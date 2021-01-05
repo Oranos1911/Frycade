@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="arcade1">#ff0000</color>
+  <color name="arcade2">#00ffff</color>
+  <color name="arcade3">#00ff00</color>
+  <color name="arcade4">#ff00ff</color>
+  <color name="arcade5">#ffff00</color>
+</resources>

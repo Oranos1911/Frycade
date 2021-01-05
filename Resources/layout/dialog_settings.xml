@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="25dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@android:color/black"
+    >
+
+     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/tvSettings"
+        android:textColor="@color/arcade2"
+        android:textSize="25sp"
+     />
+
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="30dp"
+     >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tvName"
+            android:textColor="@color/arcade5"
+            android:textSize="18sp"
+      
+        />
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="5dp" 
+            android:textColor="@color/arcade5"
+            android:backgroundTint="@color/arcade5"
+            android:textSize="13.5sp"
+        />   
+
+          <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/arcade1"
+            android:textSize="12.5sp"
+      
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:orientation="vertical"
+        android:gravity="center"
+    >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+        >
+            <CheckBox
+                android:id="@+id/cb_muteSounds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Mute Sound"
+                android:fontFamily="@font/arcade"
+                android:textColor="@color/arcade4"
+                android:buttonTint="@color/arcade4" 
+            />
+
+            
+            <ImageView
+                android:layout_width="128px"
+                android:layout_height="128px"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/ic_play_sound"
+           />
+        
+        
+         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+        >
+            <CheckBox
+                android:id="@+id/cb_muteMusic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Mute Music"
+                android:fontFamily="@font/arcade"
+                android:textColor="@color/arcade4"
+                android:buttonTint="@color/arcade4"
+            />
+
+            <ImageView
+                android:layout_width="128px"
+                android:layout_height="128px"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/ic_play_music"
+           />
+        </LinearLayout>
+
+    
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+    >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+         >
+             <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:text="@string/btnOk"
+                android:backgroundTint="@color/arcade3"
+             />            
+        </LinearLayout>  
+    </LinearLayout>
+</LinearLayout>

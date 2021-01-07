@@ -12,12 +12,13 @@ using System.Text;
 
 namespace Doodle
 {
-    static class CanvasConstants
+    static class CanvasScaler
     {
-        enum dim 
+        public enum Dim 
         {
             width ,
-            height
+            height ,
+            sqaure
         }
 
         public static float ScallerWidth;
@@ -31,12 +32,14 @@ namespace Doodle
             ScallerSqaure = ScallerWidth * ScallerHeight;
         }
 
-        public static float GetFloat(float f , string dim)
+        public static float GetFloat(float f , Dim dim)
         {
-            //if(dim == dim.height)
-            //    return f * ScallerWidth;
-            //if (dim == "height")
-            //    return f * ScallerHeight;
+            if (dim == Dim.width)
+                return f * ScallerWidth;
+            if (dim == Dim.height)
+                return f * ScallerHeight;
+            if (dim == Dim.sqaure)
+                return f * ScallerSqaure;
             return 0;
         }
 

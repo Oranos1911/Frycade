@@ -70,6 +70,8 @@ namespace Doodle
                     false
                     );
             }
+
+            IsDead = false;
         }
 
         public override void Run(Boardgame game, Canvas canvas, Plane plane)
@@ -222,8 +224,7 @@ namespace Doodle
                 }
             }
             else
-                Dismiss(game, canvas, plane);
-            
+                Dismiss(game, canvas, plane);           
         }
 
         public override void Dismiss(Boardgame game, Canvas canvas, Plane plane)

@@ -106,9 +106,6 @@ namespace Doodle
             var editor = sharedPreferences.Edit();
             editor.PutString(Constants.SELECT_NICKNAME_KEY, requestedName);
             editor.Commit();
-
-            //Finally
-            CloseDialogs();
         }
 
         public void OnFailure(Java.Lang.Exception e)
@@ -120,6 +117,7 @@ namespace Doodle
             ISharedPreferencesEditor editor = sharedPreferences.Edit();
             editor.PutBoolean(Constants.MUTE_SOUNDS_KEY, cbMuteSound.Checked);
             editor.PutBoolean(Constants.MUTE_MUSIC_KEY, cbMuteMusic.Checked);
+            editor.Commit();
 
             string name = etName.Text.ToUpper();
 
@@ -140,13 +138,14 @@ namespace Doodle
                 return;
             }
 
-            // Update nickname to Firebase (if not duplicated)
+            // Update new nickname to Firebase (if not duplicated)
             requestedName = name;
             UpdateRecord();
 
             // Handle different Settings
             firstRun = false;
-            UpdateVariables();   
+            UpdateVariables();
+            CloseDialogs();
         }
 
         public void SaveTheme()

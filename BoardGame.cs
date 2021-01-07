@@ -173,7 +173,7 @@ namespace Doodle
 
             foreach (Plane plane in planes)
             {
-                if (plane.monsterCat.IsActive)
+                if (plane.monsterCat.IsActive && !plane.monsterCat.IsDead)
                 {
                     if (bullets.Count > 0 && bullets.Last().IsInteractedBellow(plane.monsterCat.mass))
                     {
@@ -194,7 +194,7 @@ namespace Doodle
                     }
                 }
 
-                if (plane.monsterBird.IsActive)
+                if (plane.monsterBird.IsActive && !plane.monsterBird.IsDead)
                 {
                     if (bullets.Count > 0 && bullets.Last().IsInteractedBellow(plane.monsterBird.mass))
                     {

@@ -14,41 +14,53 @@ namespace Doodle
 {
     class Hud
     {
+        // Canvas Variables (To be scalled)
+        private static float paddingHorizontal = 100;
+        private static float paddingVertical = 50;
+        private static float hudHeight = 125;
+        private static float StreakTextSize = 125;
         private static float FinalTextSize = 125;
-        private static float NewScoreSize = 75; 
+        private static float NewScoreTextSize = 75;
+        private static float btnsPadding = 100;
+        private static float textPadding = 150;
 
-        private static float btnsPadding = 100f;
-        private static float textPadding = 150f;
-        private static float paddingHorizontal = 100f;
-        private static float paddingVertical = 50f;
-
-
+        private static int BlurAmount = 35;
         private static Color InGameScoreTextColor = Color.Rgb(255, 255, 255);
         private static Color FinalTextColor = Color.Rgb(255, 255, 0);
         private static Color NewScoreTextColor = Color.Rgb(0 , 255 , 255);
         private static Color NewScoreTextNumberColor = Color.Rgb(0, 255, 0);
         private static Color PauseTextColor = Color.Rgb(255 ,255, 0);
-
+        private static Color RampStreakColor = Color.Rgb(0, 255, 255);
+        private static Color MonsterStreakColor = Color.Rgb(0, 255, 0);
 
         private Context context;
         private bool isPauseButtonFlipped;
         private bool isGameOver, isNewScore;
-        public float HudHeight { get; set; }
         public Canvas canvas { get; set; }
         public CanvasButton BtnPause { get; set; }
         public CanvasButton BtnHome { get; set; }
         public CanvasButton BtnPlay { get; set; }
 
-        public Hud(Context context , Canvas canvas , float height)
+        public static void InitCanvasVariables()
+        {
+            paddingHorizontal = CanvasScaler.GetFloat(paddingHorizontal , CanvasScaler.Dim.width);
+            paddingVertical = CanvasScaler.GetFloat(paddingVertical, CanvasScaler.Dim.height);
+            hudHeight = CanvasScaler.GetFloat(hudHeight, CanvasScaler.Dim.height);
+            StreakTextSize = CanvasScaler.GetFloat(StreakTextSize, CanvasScaler.Dim.width);
+            FinalTextSize = CanvasScaler.GetFloat(FinalTextSize, CanvasScaler.Dim.width);
+            NewScoreTextSize = CanvasScaler.GetFloat(NewScoreTextSize, CanvasScaler.Dim.width);
+            btnsPadding = CanvasScaler.GetFloat(btnsPadding, CanvasScaler.Dim.width);
+            textPadding = CanvasScaler.GetFloat(textPadding, CanvasScaler.Dim.width);
+        }
+
+        public Hud(Context context , Canvas canvas)
         {
             this.context = context;
             this.canvas = canvas;
-            HudHeight = height;
 
             isPauseButtonFlipped = false;
             isGameOver = false;
             isNewScore = false;
-
 
             Bitmap iconPause = BitmapFactory.DecodeResource(context.Resources, Resource.Drawable.ic_pause);
             iconPause = Operations.GetResizedBitmap(iconPause, 0.34f);
@@ -66,18 +78,34 @@ namespace Doodle
 
         }
 
-        public void DrawHUD(int score)
+        public void DrawHUD(Boardgame game)
         {
-            DrawText("" + score , HudHeight, InGameScoreTextColor, paddingHorizontal, HudHeight + paddingVertical , false);
+            DrawText("" + game.GetCurrentScore() , hudHeight, InGameScoreTextColor, paddingHorizontal, hudHeight + paddingVertical , false);
             BtnPause.Draw(canvas);
+            if (game.timer.RampStreak > 1)
+                DrawRampStreak(game.timer.RampStreak);
+            if (game.timer.MonsterStreak > 1)
+                DrawMonsterStreak(game.timer.MonsterStreak);
             if (isGameOver)
-                DrawFinal(score);
+                DrawFinal(game.GetCurrentScore());
+
         }
 
         public void DrawPause()
         {
-            DrawText("Pause" , HudHeight, PauseTextColor , paddingHorizontal, 2 * HudHeight + paddingVertical , false);
+            DrawText("Pause", hudHeight, PauseTextColor, paddingHorizontal, 2 * hudHeight + paddingVertical, false);
         }
+
+        private void DrawRampStreak(int streak)
+        {
+
+            DrawText(String.Format("{0}X", streak), StreakTextSize , RampStreakColor, paddingHorizontal , 3 * hudHeight + paddingVertical, false);
+        }
+        private void DrawMonsterStreak(int streak)
+        {
+            DrawText(String.Format("{0}X", streak), StreakTextSize, MonsterStreakColor, 5 * paddingHorizontal, 3 * hudHeight + paddingVertical, false);
+        }
+
 
         private void DrawFinal(int score)
         {
@@ -90,8 +118,8 @@ namespace Doodle
 
         private void DrawRecord(int score)
         {
-            DrawText("New High Score!", NewScoreSize , NewScoreTextColor, canvas.Width / 2 , canvas.Height / 2 + textPadding , true);
-            DrawText("" + score , NewScoreSize , NewScoreTextNumberColor, canvas.Width / 2 , canvas.Height / 2 + 2 * textPadding, true);
+            DrawText("New High Score!", NewScoreTextSize , NewScoreTextColor, canvas.Width / 2 , canvas.Height / 2 + textPadding , true);
+            DrawText("" + score , NewScoreTextSize , NewScoreTextNumberColor, canvas.Width / 2 , canvas.Height / 2 + 2 * textPadding, true);
 
         }
         private void DrawText(string str , float size , Color color , float x , float y , bool center)
@@ -105,12 +133,13 @@ namespace Doodle
             text.Color = color;
             text.SetTypeface(context.Resources.GetFont(Resource.Font.arcade));         
 
-            Paint paintGlow = new Paint();
-            paintGlow.Set(text);
-            paintGlow.SetMaskFilter(new BlurMaskFilter(35, BlurMaskFilter.Blur.Normal));
+           // Paint paintGlow = new Paint();
+           //  paintGlow.Set(text);
+           //  paintGlow.SetMaskFilter(new BlurMaskFilter(BlurAmount , BlurMaskFilter.Blur.Normal));
+
 
             canvas.DrawText(str , x, y, text);
-            canvas.DrawText(str , x, y, paintGlow);
+            canvas.DrawText(str , x, y, Operations.PaintGlow(text , BlurAmount));
         }
 
         public void FlipPauseButton()

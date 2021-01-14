@@ -35,7 +35,7 @@ namespace Doodle
 
     abstract class Monster : Accessorie 
     {
-        public Mass mass;
+        public Mass Mass { get; set; }
         public bool IsDead { get; set; }
 
         public Monster() : base()
@@ -45,9 +45,9 @@ namespace Doodle
         public void Kill()
         {
             IsDead = true;
-            mass.paint = Operations.PaintColor(Color.Red);
-            mass.v = new Vector(0 , Player.jumpVelocity);
-            mass.a = Mass.gravityForce;
+            Mass.paint = Operations.PaintColor(Color.Red);
+            Mass.v = new Vector(0 , Player.jumpVelocity);
+            Mass.a = Mass.GravityForce;
         }
 
     }
@@ -55,18 +55,18 @@ namespace Doodle
 
     class Cat : Monster
     {
-        public Color objectColor = Color.Rgb(255, 255, 0);
+        public static Color ObjectColor = Color.Rgb(255, 255, 0);
         public Cat() : base() { }
 
         public override void Init(Boardgame game, Canvas canvas, Plane plane)
         {
             if(IsActive)
             {
-                mass = new Mass(
+                Mass = new Mass(
                     Vector.zeroVector, Vector.zeroVector, 
                     Vector.zeroVector, 
                     game.MonsterCatSprite , 
-                    Operations.PaintColor(objectColor) , 
+                    Operations.PaintColor(ObjectColor) , 
                     false
                     );
             }
@@ -79,10 +79,10 @@ namespace Doodle
             if(IsActive)
             {
                 if (!IsDead)
-                    mass.r = plane.r + new Vector(plane.Sprite.Width / 2 - mass.Sprite.Width / 2, -1 * mass.Sprite.Height);
-                mass.Run(game, canvas);
+                    Mass.r = plane.r + new Vector(plane.Sprite.Width / 2 - Mass.Sprite.Width / 2, -1 * Mass.Sprite.Height);
+                Mass.Run(game, canvas);
 
-                if (mass.r.y > canvas.Height)
+                if (Mass.r.y > canvas.Height)
                     Dismiss(game, canvas, plane);
             }
            
@@ -91,13 +91,14 @@ namespace Doodle
 
     class Bird : Monster
     {
-        public static bool IsInstanceRunning = false;
-        public static float Velocity = 7.5f;
+        // Canvas Variables (To be scalled)
+        public static float Velocity = 9.5f;
 
-        public Bird() : base() 
+        public static void InitCanvasVariables()
         {
-            IsInstanceRunning = false;
+            Velocity = CanvasScaler.GetFloat(Velocity, CanvasScaler.Dim.width);
         }
+        public Bird() : base() { }
 
         public override void Init(Boardgame game, Canvas canvas, Plane plane)
         {
@@ -121,7 +122,7 @@ namespace Doodle
                 }
                     
                 
-                mass = new Mass(
+                Mass = new Mass(
                     new Vector(initialLocation ,0) , 
                     direction * new Vector(Velocity , 0) , 
                     Vector.zeroVector, 
@@ -129,7 +130,6 @@ namespace Doodle
                     Operations.PaintRandomColor() ,
                     false
                     );
-                IsInstanceRunning = true;
             }
         }
 
@@ -137,33 +137,33 @@ namespace Doodle
         {
             if (IsActive)
             {
-                mass.Run(game, canvas);
-                if (mass.r.x > canvas.Width || mass.r.x + mass.Sprite.Width < 0)
+                Mass.Run(game, canvas);
+                if (Mass.r.x > canvas.Width || Mass.r.x + Mass.Sprite.Width < 0)
                     Dismiss(game , canvas , plane);
-                if (mass.r.y - mass.Sprite.Height > canvas.Height) 
+                if (Mass.r.y - Mass.Sprite.Height > canvas.Height) 
                     Dismiss(game, canvas, plane);
             }
         }
 
-        public override void Dismiss(Boardgame game, Canvas canvas, Plane plane)
-        {
-            base.Dismiss(game, canvas, plane);
-            IsInstanceRunning = false;
-        }
-
         public void Drop(float offset)
         {
-            mass.r.y += offset;
+            Mass.r.y += offset;
         }
 
      }
 
     class Ramp : Accessorie
     {
+        // Canvas Variables (To be scalled)
+        public static float JumpVelocity = 110f;
+
         public static Color objectColor = Color.Rgb(0, 255, 255);
         public Mass mass;
 
-        public static float jumpVelocity = 110f;
+        public static void InitCanvasVariables()
+        {
+            JumpVelocity = CanvasScaler.GetFloat(JumpVelocity, CanvasScaler.Dim.height);
+        }
         public Ramp() : base() { }
 
         public override void Init(Boardgame game, Canvas canvas, Plane plane)
@@ -192,11 +192,20 @@ namespace Doodle
 
     }
     class Ocilator : Accessorie
-    {
-        public static Color objectColor = Color.Rgb(255, 0, 255);
+    {  
+        // Canvas Variables (To be scalled)
         public static float ocillateVelocity = 7;
         public static float ocillateRadius = 300;
+
+        public static Color objectColor = Color.Rgb(255, 0, 255);
+
         public float InitialX { get; set; }
+
+        public static void InitCanvasVariables()
+        {
+            ocillateVelocity = CanvasScaler.GetFloat(ocillateVelocity, CanvasScaler.Dim.width);
+            ocillateRadius = CanvasScaler.GetFloat(ocillateRadius, CanvasScaler.Dim.width);
+        }
 
         public Ocilator() : base() { }
         public override void Init(Boardgame game , Canvas canvas , Plane plane)
@@ -240,10 +249,10 @@ namespace Doodle
 
         public static Paint DefaultPaint = Operations.PaintColor(Color.OrangeRed);
 
-        public static float OcilatorSpawnProb = 0.09f;
-        public static float RampSpawnProb = 0.043f;
-        public static float MonsterCatSpawnProb = 0.07f;
-        public static float MonsterBirdSpawnProb = 0.06f;
+        public static float RampSpawnProb = 0.067f;
+        public static float OcilatorSpawnMaxProb = 0.37f;      
+        public static float MonsterCatSpawnMaxProb = 0.32f;
+        public static float MonsterBirdSpawnMaxProb = 0.222f;
 
         public Ocilator Ocilator { get; set; }
         public Ramp ramp { get; set; }
@@ -269,10 +278,10 @@ namespace Doodle
 
         private void Restate(Boardgame game, Canvas canvas)
         {
-            Ocilator.IsActive =  new Random().NextDouble() <= OcilatorSpawnProb;
-            ramp.IsActive = new Random().NextDouble() <= OcilatorSpawnProb;
-            monsterCat.IsActive = new Random().NextDouble() <= MonsterCatSpawnProb && !ramp.IsActive && game.player.IsProtected();
-            monsterBird.IsActive = new Random().NextDouble() <= MonsterBirdSpawnProb && !Bird.IsInstanceRunning && game.player.IsProtected();
+            ramp.IsActive = new Random().NextDouble() <= RampSpawnProb;
+            Ocilator.IsActive =  new Random().NextDouble() <= game.GetScoreProbability(OcilatorSpawnMaxProb);        
+            monsterCat.IsActive = new Random().NextDouble() <= game.GetScoreProbability(MonsterCatSpawnMaxProb) && game.player.IsProtected() && !ramp.IsActive;
+            monsterBird.IsActive = new Random().NextDouble() <= game.GetScoreProbability(MonsterBirdSpawnMaxProb) &&  game.player.IsProtected();
 
             Ocilator.Init(game , canvas , this);
             ramp.Init(game, canvas, this);
@@ -291,6 +300,8 @@ namespace Doodle
         public void Drop(float offset)
         {
             r.y += offset;
+            if (monsterBird.IsActive)
+                    monsterBird.Drop(offset);
         }
 
         protected override void PreMechanics(Boardgame game, Canvas canvas)

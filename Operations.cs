@@ -18,6 +18,8 @@ namespace Doodle
     {
         public static float Map(float value, float fromSource, float toSource, float fromTarget, float toTarget)
         {
+            if (value >= toSource)
+                return toTarget;
             return (value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget;
         }
     }
@@ -52,6 +54,14 @@ namespace Doodle
             return paint;
         }
 
+        public static Paint PaintGlow(Paint paint , int amount)
+        {
+            Paint paintGlow = new Paint();
+            paintGlow.Set(paint);
+            paintGlow.SetMaskFilter(new BlurMaskFilter(amount , BlurMaskFilter.Blur.Normal));
+
+            return paintGlow;
+        }
         public static Paint PaintRandomColor()
         {
             Random rand = new Random();

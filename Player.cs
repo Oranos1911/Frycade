@@ -18,16 +18,26 @@ namespace Doodle
     class Player : Mass
     {
 
+        // Canvas Variables (To be scalled)
         public static float jumpVelocity = 50f;
-        private static float protectVelocity = 45f;
-        private static float limitVelocity = 250f;
-        private static float sensorVelocity = 5f;
-        private static float sensorAcceleration = 5f;
-        private static float sensorFlipSensitivity = 2.5f;
+        public static float protectVelocity = 45f;
+        public static float limitVelocity = 250f;
+        public static float sensorVelocity = 7.4f;
+        public static float sensorAcceleration = 1.5f;
+        public static float sensorFlipSensitivity = 2.5f;
 
         public bool IsInverted { get; set; }
         public bool IsDead { get;  set; }
 
+        public static void InitCanvasVariables()
+        {
+            jumpVelocity = CanvasScaler.GetFloat(jumpVelocity, CanvasScaler.Dim.height);
+            protectVelocity = CanvasScaler.GetFloat(protectVelocity, CanvasScaler.Dim.height);
+            limitVelocity = CanvasScaler.GetFloat(limitVelocity, CanvasScaler.Dim.width);
+            sensorVelocity = CanvasScaler.GetFloat(sensorVelocity, CanvasScaler.Dim.width);
+            sensorAcceleration = CanvasScaler.GetFloat(sensorAcceleration, CanvasScaler.Dim.width);
+            sensorFlipSensitivity = CanvasScaler.GetFloat(sensorFlipSensitivity, CanvasScaler.Dim.width);
+        }
         public Player(Vector location , Vector velocity , Vector acceleration , Bitmap sprite) 
             : base(location , velocity , acceleration , sprite , CharacterHelper.GetCurrentPlayerPaint() , true)
         {
@@ -35,7 +45,13 @@ namespace Doodle
             IsInverted = false;
         }
 
- 
+        public bool IsProtected()
+        {
+            if (Math.Abs(v.y) < protectVelocity)
+                return true;
+            return false;
+        }
+
         public void ReactToSensor(float value)
         {
             v.x = -1 * sensorVelocity * value;
@@ -49,20 +65,13 @@ namespace Doodle
 
         public void JumpRamp()
         {
-            v.y = -1 * Ramp.jumpVelocity;
+            v.y = -1 * Ramp.JumpVelocity;
         }
         public void Kill()
         {
             IsDead = true;
             paint = Operations.PaintColor(Color.Red);
             v = new Vector(0, jumpVelocity);
-        }
-
-        public bool IsProtected()
-        {
-            if (Math.Abs(v.y) < protectVelocity)
-                return true;
-            return false;
         }
         protected override void PostMechanics(Boardgame game, Canvas canvas)
         {

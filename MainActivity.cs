@@ -87,7 +87,7 @@ namespace Doodle
             var snapshot = (QuerySnapshot) result;
             var documents = snapshot.Documents;
             if(documents.Count != 0 && requestedName != sharedPreferences.GetString(Constants.SELECT_NICKNAME_KEY , ""))
-            {
+            { 
                 tvError.Text = "That name is already taken cowboy ;)";
                 return;
             }
@@ -106,6 +106,9 @@ namespace Doodle
             var editor = sharedPreferences.Edit();
             editor.PutString(Constants.SELECT_NICKNAME_KEY, requestedName);
             editor.Commit();
+
+            // Close Dialog at the end
+            CloseDialogs();
         }
 
         public void OnFailure(Java.Lang.Exception e)
@@ -144,8 +147,7 @@ namespace Doodle
 
             // Handle different Settings
             firstRun = false;
-            UpdateVariables();
-            CloseDialogs();
+            UpdateVariables();           
         }
 
         public void SaveTheme()

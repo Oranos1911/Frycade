@@ -14,8 +14,17 @@ namespace Doodle
 {
     class Mass
     {
+
+        // Canvas Variables (To be scalled)
+        public static Vector GravityForce = new Vector(0, 1.45f);
+
+        private static float dt = 1.00f;
+        public static void InitCanvasVariables()
+        {
+            GravityForce = CanvasScaler.GetVector(GravityForce);
+        }
+
         // Analytical properties
-        public static Vector gravityForce = new Vector(0, 1.45f);
         public Vector r { get; set; } // Location
         public Vector v { get; set; } // Velocity
         public Vector a { get; set; } // Acceleration
@@ -55,16 +64,7 @@ namespace Doodle
         protected virtual void PreMechanics(Boardgame game ,  Canvas canvas) {; }
         protected virtual void PostMechanics(Boardgame game, Canvas canvas) {; }
 
-        public virtual bool IsInteractedCenterBellow(Mass mass)
-        {
-            bool axisY = r.y < mass.r.y  + mass.Sprite.Height / 2 && r.y > mass.r.y;
-            bool axisX1 = r.x > mass.r.x && r.x < mass.r.x + mass.Sprite.Width;
-            bool axisX2 = r.x + Sprite.Width > mass.r.x && r.x + Sprite.Width < mass.r.x + mass.Sprite.Width;
 
-            if (axisY && (axisX1 || axisX2))
-                return true;
-            return false;
-        }
         public virtual bool IsInteractedAbove(Mass mass)
         {
             bool axisY = r.y + Sprite.Height > mass.r.y && r.y + Sprite.Height < mass.r.y + mass.Sprite.Height;
@@ -87,18 +87,30 @@ namespace Doodle
             return false;
         }
 
+        public virtual bool IsInteractedCenterBellow(Mass mass)
+        {
+            bool axisY = r.y < mass.r.y + mass.Sprite.Height / 2 && r.y > mass.r.y;
+            bool axisX1 = r.x > mass.r.x && r.x < mass.r.x + mass.Sprite.Width;
+            bool axisX2 = r.x + Sprite.Width > mass.r.x && r.x + Sprite.Width < mass.r.x + mass.Sprite.Width;
+
+            if (axisY && (axisX1 || axisX2))
+                return true;
+            return false;
+        }
+
         private void Update(Boardgame game, Canvas canvas)
         {
             PreMechanics(game, canvas);
-            v = v + a;
-            r = r + v;
+            v = v + a * dt;
+            r = r + v * dt;
             PostMechanics(game, canvas);
         }
 
         private void Draw(Canvas canvas)
         {
             if (Sprite != null)
-                canvas.DrawBitmap(Sprite, r.x  , r.y , paint);
+               canvas.DrawBitmap(Sprite, r.x, r.y, paint);
+
             // For Debug only :         
             // Paint paint1 = new Paint();
             // paint1.Color = Color.Red;

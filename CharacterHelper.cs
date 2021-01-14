@@ -15,18 +15,21 @@ namespace Doodle
 {
     static class CharacterHelper
     {
+        // In Activity properties
         public static string[] Names = {"Aharon", "Sanjay", "Bell" , "Hector" , "Vjay"};
-        public static float[] Scales = { 0.17f, 0.17f, 0.17f, 0.17f, 0.17f };
+        public static int Length = Names.Length;
+        public static int Current = 0;
+
+        // In game properties
+        public static float[] Scales = { 0.17f, 0.18f, 0.165f, 0.18f, 0.2f };
         public static Paint[] Paints = {
             Operations.PaintColor(Color.Rgb(255 , 0 , 76)) ,
-            Operations.PaintColor(Color.Rgb(241 , 79 , 0)) ,
+            Operations.PaintColor(Color.Rgb(121 , 255 , 0)) ,
             Operations.PaintColor(Color.Rgb(0 , 255 , 255)) ,
-            Operations.PaintColor(Color.Rgb(213 , 189 , 80)) ,
-            Operations.PaintColor(Color.Rgb(213 , 189 , 80))
+            Operations.PaintColor(Color.Rgb(248 , 64 , 250)) ,
+            Operations.PaintColor(Color.Rgb(45 , 251 , 204))
         };
-        public static int Length = Names.Length;
 
-        public static int Current = 0;
         public static List<Character> GetList(Context context)
         {
 

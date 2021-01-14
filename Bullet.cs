@@ -14,14 +14,22 @@ namespace Doodle
 {
     class Bullet : Mass
     {
+        // Canvas Variables (To be scalled)
         private static float BulletVelocity = 65f;
-        private static float ToRange = 1350;
         private static float FromRange = 0;
-        private static float FromAngle = (float) (3 * Math.PI / 4);
-        private static float ToAngle = (float) Math.PI / 4;
+        private static float ToRange = 100;
 
+        private static float FromAngle = (float) (5 * Math.PI / 6);
+        private static float ToAngle = (float) (Math.PI / 6);
 
         public bool IsActive { get; set; }
+
+        public static void InitCanvasVariables()
+        {
+            BulletVelocity = CanvasScaler.GetFloat(BulletVelocity, CanvasScaler.Dim.height);
+            FromRange = CanvasScaler.GetPresent(FromRange, CanvasScaler.Dim.width);
+            ToRange = CanvasScaler.GetPresent(ToRange , CanvasScaler.Dim.width);
+        }
         public Bullet(Bitmap sprite) 
             : base(Vector.zeroVector , Vector.zeroVector , Vector.zeroVector , sprite)
         {

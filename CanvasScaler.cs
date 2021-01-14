@@ -16,33 +16,55 @@ namespace Doodle
     {
         public enum Dim 
         {
-            width ,
-            height ,
-            sqaure
+            width,
+            height
         }
 
-        public static float ScallerWidth;
-        public static float ScallerHeight;
-        public static float ScallerSqaure;
+        private static float ScallerWidth;
+        private static float ScallerHeight;
 
-        public static void InitCanvasScale(Canvas canvas)
+        private static int ConstantScallerWidth = 1440;
+        private static int ConstantScallerHeight = 2890;
+
+        public static void InitCanvasScaler(Canvas canvas)
         {
             ScallerWidth = canvas.Width;
             ScallerHeight = canvas.Height;
-            ScallerSqaure = ScallerWidth * ScallerHeight;
+        }
+
+        public static float GetCanvasWidth()
+        {
+            return ScallerWidth;
+        }
+
+        public static float GetCanvasHeight()
+        {
+            return ScallerHeight;
+        }
+
+        public static float GetPresent(float p , Dim dim)
+        {
+            if (dim == Dim.width)
+                return GetCanvasWidth() * (p / 100);
+            if (dim == Dim.height)
+                return GetCanvasHeight() * (p / 100);
+            return 0;
         }
 
         public static float GetFloat(float f , Dim dim)
         {
             if (dim == Dim.width)
-                return f * ScallerWidth;
+                return f / ConstantScallerWidth * ScallerWidth;
             if (dim == Dim.height)
-                return f * ScallerHeight;
-            if (dim == Dim.sqaure)
-                return f * ScallerSqaure;
+                return f / ConstantScallerHeight * ScallerHeight;
             return 0;
         }
 
+        public static Vector GetVector(Vector v)
+        {
+            return new Vector(GetFloat(v.x, Dim.width), GetFloat(v.y, Dim.height));
+        }
 
+       
     }
 }
